@@ -66,9 +66,6 @@ The notebook sets up the following directory structure in your Google Drive:
 *   **Connection Timed Out:** Restart the Colab runtime (Runtime -> Restart session) and run the cells again.
 *   **Low VRAM:** The notebook uses `xformers` to minimize VRAM usage. If you still face OOM (Out of Memory) errors, try reducing the resolution in your workflow (e.g., 512x512).
 
-##  License
-This project is licensed under the MIT License.
-
 ##  Author
 **Yashank Krishna Mhatre**
 *AI Engineer | GenAI | Voice AI*
