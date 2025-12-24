@@ -26,7 +26,7 @@ This repository contains a **Google Colab notebook** that provisions a productio
 1.  A **Google Account** to use Google Colab.
 2.  **Google Drive** storage space (approx. 10GB recommended for models).
 
-## 🚀 How to Use
+##  How to Use
 
 ### Open in Colab
 Click the "Open in Colab" badge below (or copy the notebook content into a new Colab file).
