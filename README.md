@@ -33,6 +33,9 @@ Click the "Open in Colab" badge below (or copy the notebook content into a new C
 
 Open in colab : https://colab.research.google.com/drive/1nI4Qev6IiNERKvkvh7bwqbMMIk3RHL-4?usp=sharing
 
+**ComfyUI Node Graph:** This is the specific workflow logic used to generate consistent characters.
+
+
 ### Run Setup Cells
 1.  **Environment Setup:** Run the first cell to install ComfyUI and dependencies. (Uncheck update options on subsequent runs to save time).
 2.  **Download Models:** Run the cells to download `v1-5-pruned-emaonly.safetensors`, `CLIP Vision`, and `IP-Adapter` weights.
