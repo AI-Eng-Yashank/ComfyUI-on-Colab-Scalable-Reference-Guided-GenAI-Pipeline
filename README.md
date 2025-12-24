@@ -6,22 +6,22 @@ This repository contains a **Google Colab notebook** that provisions a productio
 ![Python](https://img.shields.io/badge/Python-3.12-green)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-##   Features
+## Features
 
-*   ** Persistent Storage:** Mounts Google Drive to save models and workflows, preventing data loss after Colab sessions end.
-*   ** IP-Adapter Ready:** Pre-configured to handle IP-Adapter workflows, including automated download of CLIP Vision models and weights.
-*   ** Remote Access:** Utilizes **Cloudflared** to create a secure tunnel, allowing you to interact with the ComfyUI interface from your local browser.
-*   ** Environment Management:** One-click installation of dependencies including `xformers` for VRAM optimization.
-*   ** Directory Management:** Automated directory creation and verification for checkpoints, clip_vision, and IPAdapter models.
+*   **Persistent Storage:** Mounts Google Drive to save models and workflows, preventing data loss after Colab sessions end.
+*   **IP-Adapter Ready:** Pre-configured to handle IP-Adapter workflows, including automated download of CLIP Vision models and weights.
+*   **Remote Access:** Utilizes **Cloudflared** to create a secure tunnel, allowing you to interact with the ComfyUI interface from your local browser.
+*   **Environment Management:** One-click installation of dependencies including `xformers` for VRAM optimization.
+*   **Directory Management:** Automated directory creation and verification for checkpoints, clip_vision, and IPAdapter models.
 
-##  Tech Stack
+## Tech Stack
 
 *   **Backend:** Python 3.12, PyTorch, ComfyUI
 *   **Optimization:** xformers, CUDA 12.x
 *   **Tunneling:** Cloudflared
 *   **Models:** Stable Diffusion 1.5, IP-Adapter SD1.5
 
-##  Prerequisites
+## Prerequisites
 
 1.  A **Google Account** to use Google Colab.
 2.  **Google Drive** storage space (approx. 10GB recommended for models).
@@ -73,7 +73,7 @@ This project is licensed under the MIT License.
 
 This section details the logic behind each cell in the notebook, explaining the engineering decisions made to ensure stability and performance.
 
-#### ** Environment Setup**
+#### **Environment Setup**
 This is the foundation of the pipeline. It handles the initial setup and subsequent runs efficiently.
 *   **Google Drive Mounting:** Checks if `USE_GOOGLE_DRIVE` is True. If so, it mounts `/content/drive/` to allow the ComfyUI environment to persist data.
 *   **Path Management:** Defines the `WORKSPACE` variable pointing to `/content/drive/MyDrive/ComfyUI`.
@@ -83,35 +83,35 @@ This is the foundation of the pipeline. It handles the initial setup and subsequ
 *   **ComfyUI Manager:** Clones the ComfyUI-Manager extension into `custom_nodes/`. It also fixes Linux permissions (`chmod 755`) for shell scripts within the manager, which often fail due to Drive permission quirks.
 *   **Smart Flags:** `UPDATE_COMFY_UI` and `USE_COMFYUI_MANAGER` are set to `True` by default. The user is instructed to uncheck these on future runs to avoid reinstalling dependencies every time, speeding up the workflow significantly.
 
-#### ** Directory Structure Validator**
+#### **Directory Structure Validator**
 This is a utility cell for debugging.
 *   **File Tree Generation:** Uses Python's `os.walk` to recursively print the file structure of the `WORKSPACE`.
 *   **Why?** In Colab, it can be difficult to know exactly where your files are or if specific folders were created. This cell allows the user to visually verify that `models/checkpoints` and `models/clip_vision` folders actually exist before attempting downloads.
 
-#### ** Download Base Checkpoint**
+#### **Download Base Checkpoint**
 *   **Objective:** Downloads the Stable Diffusion 1.5 base model.
 *   **Command:** Uses `wget -c` (resume capability) to download `v1-5-pruned-emaonly.safetensors`.
 *   **Path:** Saves to `/content/drive/MyDrive/ComfyUI/models/checkpoints/`. This is the standard path ComfyUI scans for base models.
 
-#### ** Download CLIP Vision Model**
+#### **Download CLIP Vision Model**
 *   **Critical Fix:** This cell solves the `ClipVision model not found` error.
 *   **Mechanism:** IP-Adapter requires a specific "Image Encoder" model to "see" the reference image. This is separate from the main checkpoint.
 *   **Execution:** Creates the `models/clip_vision` directory (if missing) and downloads `CLIP-ViT-H-14-laion2B-s32B-b79K.safetensors`.
 
-#### ** Verify Checkpoint Integrity**
+#### **Verify Checkpoint Integrity**
 *   **Sanity Check:** Uses Python `os.path.getsize` to check the downloaded checkpoint size.
 *   **Validation:** If the file size is less than 3.5GB, it prints a warning. A typical corrupted download or HTML 404 error file is often only a few KB. This prevents the user from trying to run the workflow with a broken file.
 
-#### ** Download IP-Adapter Weights**
+#### **Download IP-Adapter Weights**
 *   **Objective:** Downloads the actual IP-Adapter weights (`ip-adapter_sd15.safetensors`).
 *   **Path:** Saves to `models/ipadapter`. These files contain the actual neural network layers that inject the style into the UNet.
 *   **Logic:** Ensures the specific weights for SD1.5 are downloaded, as SDXL or Flux requires different versions.
 
-#### ** Comprehensive Model Verification**
+#### **Comprehensive Model Verification**
 *   **Dual Check:** Verifies *both* the CLIP Vision model (Cell 4) and the IPAdapter Weights (Cell 6).
 *   **Feedback:** Prints `FOUND` or `MISSING` status for each. This acts as a final "Green Light" check before launching the server.
 
-#### ** Launch Server & Cloudflared Tunnel**
+#### **Launch Server & Cloudflared Tunnel**
 This cell makes the local server accessible globally.
 *   **Cloudflared Install:** Downloads and installs the `cloudflared` `.deb` package, a tool for creating secure tunnels.
 *   **Threading:**
