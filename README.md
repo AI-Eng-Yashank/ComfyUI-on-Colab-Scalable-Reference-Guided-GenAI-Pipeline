@@ -31,7 +31,7 @@ This repository contains a **Google Colab notebook** that provisions a productio
 ### Open in Colab
 Click the "Open in Colab" badge below (or copy the notebook content into a new Colab file).
 
-Opem in colab : https://colab.research.google.com/drive/1nI4Qev6IiNERKvkvh7bwqbMMIk3RHL-4?usp=sharing
+Open in colab : https://colab.research.google.com/drive/1nI4Qev6IiNERKvkvh7bwqbMMIk3RHL-4?usp=sharing
 
 ### Run Setup Cells
 1.  **Environment Setup:** Run the first cell to install ComfyUI and dependencies. (Uncheck update options on subsequent runs to save time).
