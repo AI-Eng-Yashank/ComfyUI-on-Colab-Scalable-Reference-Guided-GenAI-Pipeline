@@ -36,6 +36,9 @@ Open in colab : https://colab.research.google.com/drive/1nI4Qev6IiNERKvkvh7bwqbM
 **ComfyUI Node Graph:** This is the specific workflow logic used to generate consistent characters.
 ![image alt](https://github.com/AI-Eng-Yashank/ComfyUI-on-Colab-Scalable-Reference-Guided-GenAI-Pipeline/blob/76083f509da7a788fb1c38e8e8620f5dc9c3ab44/workflow_image.PNG)
 
+**Output**
+![image alt]( )
+
 ### Run Setup Cells
 1.  **Environment Setup:** Run the first cell to install ComfyUI and dependencies. (Uncheck update options on subsequent runs to save time).
 2.  **Download Models:** Run the cells to download `v1-5-pruned-emaonly.safetensors`, `CLIP Vision`, and `IP-Adapter` weights.
